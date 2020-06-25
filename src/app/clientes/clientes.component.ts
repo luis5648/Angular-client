@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Cliente } from './cliente';
-import {CLIENTES} from './clientes.json';
+import { ClienteService } from './cliente.service';
 
 
 @Component({
@@ -11,10 +11,13 @@ export class ClientesComponent implements OnInit {
 
   clientes: Cliente[];
 
-  constructor() { }
+  //inyección de dependencias desde el archivo cliente.service.ts
+  constructor( private clienteService: ClienteService) { }
 
   ngOnInit(): void {
-    this.clientes = CLIENTES;  //rellena el arreglo Cliente de aquí con el json de clientes.json
+   this.clienteService.getClientes().subscribe(
+     clientes => this.clientes = clientes
+   );  //rellena el arreglo Cliente de aquí con el json de clientes.json
   }
 
 }
